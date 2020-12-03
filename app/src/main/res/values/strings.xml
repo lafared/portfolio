@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">portfolio</string>
+
+    <string name="input_img_name">input img name</string>
+
+    <string name="display_sitename">display sitename : </string>
+    <string name="datetime">datetime : </string>
+</resources>
