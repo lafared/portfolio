@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.portfolio.R
 import com.example.portfolio.databinding.ImgListItemBinding
@@ -20,6 +21,7 @@ class ImgListAdapter (private val items: ArrayList<TmpItem>) : RecyclerView.Adap
         val item = items[position]
         val listener = View.OnClickListener { it ->
             Toast.makeText(it.context, "position : ${position}", Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(holder.itemView).navigate(R.id.action_mainfragment_to_imgviewfragment)
         }
         holder.apply { bind(listener, item) }
     }
