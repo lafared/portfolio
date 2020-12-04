@@ -1,4 +1,4 @@
-package com.example.portfolio.ui.main
+package com.example.portfolio.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,18 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.portfolio.R
+import com.example.portfolio.adapter.ImgListAdapter
+import com.example.portfolio.databinding.MainFragmentBinding
+import com.example.portfolio.viewmodel.MainViewModel
+import com.example.portfolio.viewmodel.TmpItem
 
-class ImgViewFragment : Fragment() {
+class MainFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ImgViewFragment()
+        fun newInstance() = MainFragment()
     }
 
     private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.imgview_fragment, container, false)
+        val mainFragmentBinding = MainFragmentBinding.inflate(layoutInflater)
+
+        val list = ArrayList<TmpItem>()
+        for (idx in 1..100) {
+            list.add(TmpItem(idx.toString()))
+        }
+
+        mainFragmentBinding.imgList.adapter = ImgListAdapter(list)
+
+        return mainFragmentBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

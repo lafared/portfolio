@@ -1,4 +1,4 @@
-package com.example.portfolio.ui.main
+package com.example.portfolio.viewmodel
 
 import androidx.lifecycle.ViewModel
 

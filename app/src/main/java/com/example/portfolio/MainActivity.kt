@@ -2,7 +2,7 @@ package com.example.portfolio
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.portfolio.ui.main.MainFragment
+import com.example.portfolio.ui.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

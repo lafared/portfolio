@@ -1,4 +1,4 @@
-package com.example.portfolio.ui.main
+package com.example.portfolio.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.portfolio.R
+import com.example.portfolio.viewmodel.MainViewModel
 
-class MainFragment : Fragment() {
+class ImgViewFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = ImgViewFragment()
     }
 
     private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        return inflater.inflate(R.layout.imgview_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
