@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainfragment"
-        android:name="com.example.portfolio.ui.MainFragment"
+        android:name="com.taegeon.portfolio.ui.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/main_fragment" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/imgviewfragment"
-        android:name="com.example.portfolio.ui.ImgViewFragment"
+        android:name="com.taegeon.portfolio.ui.ImgViewFragment"
         android:label="fragment_imgview"
         tools:layout="@layout/imgview_fragment" >
         <action

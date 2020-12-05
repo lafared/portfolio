@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.portfolio"
+        applicationId 'com.taegeon.portfolio'
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

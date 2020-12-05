@@ -1,4 +1,4 @@
-package com.example.portfolio.adapter
+package com.taegeon.portfolio.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.example.portfolio.R
-import com.example.portfolio.databinding.ImgListItemBinding
-import com.example.portfolio.viewmodel.TmpItem
+import com.taegeon.portfolio.R
+import com.taegeon.portfolio.databinding.ImgListItemBinding
+import com.taegeon.portfolio.viewmodel.TmpItem
 
 class ImgListAdapter (private val items: ArrayList<TmpItem>) : RecyclerView.Adapter<ImgListAdapter.ViewHolder>(){
 

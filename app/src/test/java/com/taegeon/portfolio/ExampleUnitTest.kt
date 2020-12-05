@@ -1,4 +1,4 @@
-package com.example.portfolio
+package com.taegeon.portfolio
 
 import org.junit.Test
 

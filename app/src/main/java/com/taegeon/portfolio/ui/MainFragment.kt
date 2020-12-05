@@ -1,4 +1,4 @@
-package com.example.portfolio.ui
+package com.taegeon.portfolio.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,11 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.portfolio.R
-import com.example.portfolio.adapter.ImgListAdapter
-import com.example.portfolio.databinding.MainFragmentBinding
-import com.example.portfolio.viewmodel.MainViewModel
-import com.example.portfolio.viewmodel.TmpItem
+import com.taegeon.portfolio.adapter.ImgListAdapter
+import com.taegeon.portfolio.databinding.MainFragmentBinding
+import com.taegeon.portfolio.viewmodel.MainViewModel
+import com.taegeon.portfolio.viewmodel.TmpItem
 
 class MainFragment : Fragment() {
 

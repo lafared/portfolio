@@ -1,9 +1,8 @@
-package com.example.portfolio
+package com.taegeon.portfolio
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import com.example.portfolio.ui.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

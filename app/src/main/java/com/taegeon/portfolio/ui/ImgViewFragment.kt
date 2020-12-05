@@ -1,4 +1,4 @@
-package com.example.portfolio.ui
+package com.taegeon.portfolio.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.portfolio.R
-import com.example.portfolio.viewmodel.MainViewModel
+import com.taegeon.portfolio.R
+import com.taegeon.portfolio.viewmodel.MainViewModel
 
 class ImgViewFragment : Fragment() {
 
