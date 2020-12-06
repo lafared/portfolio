@@ -12,9 +12,9 @@ object DataBindingAdapters {
     @BindingAdapter("bind_img_n_list")
     fun BindImgNList(recyclerView: RecyclerView, items: MutableLiveData<ArrayList<Documents>>) {
         if (items.value != null && items.value!!.isNotEmpty()) {
-            val adapter = recyclerView.adapter as? ImgListAdapter ?: ImgListAdapter().apply { recyclerView.adapter = this }
-            adapter.items = items.value!!
-            adapter.notifyDataSetChanged()
+            val adapter = recyclerView.adapter as? ImgListAdapter
+            adapter?.items = items.value!!
+            adapter?.notifyDataSetChanged()
             recyclerView.visibility = View.VISIBLE
         } else {
             recyclerView.visibility = View.GONE

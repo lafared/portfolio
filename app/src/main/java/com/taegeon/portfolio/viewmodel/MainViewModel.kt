@@ -48,7 +48,10 @@ class MainViewModel : ViewModel() {
                         Log.d("MainViewModel", "response : ${response.body().toString()}")
 
                         if (loadMore) {
-                            documents.value?.addAll(response.body()?.documents ?: emptyList())
+                            val newList = ArrayList<Documents>()
+                            documents.value?.let { newList.addAll(it) }
+                            newList.addAll(response.body()?.documents ?: emptyList())
+                            documents.value = newList
                         } else {
                             arrayList.addAll(response.body()?.documents ?: emptyList())
                             documents.value = arrayList

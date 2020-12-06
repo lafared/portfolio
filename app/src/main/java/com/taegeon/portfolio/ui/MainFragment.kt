@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
 import com.taegeon.portfolio.R
 import com.taegeon.portfolio.adapter.DataBindingAdapters
+import com.taegeon.portfolio.adapter.ImgListAdapter
 import com.taegeon.portfolio.databinding.MainFragmentBinding
 import com.taegeon.portfolio.listener.ImgListScrollListener
 import com.taegeon.portfolio.viewmodel.MainViewModel
@@ -29,6 +30,7 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.main_fragment, container, false)
         binding.mainViewModel = mainViewModel
+        binding.imgList.adapter = ImgListAdapter(this)
 
         mainViewModel.isSuccessful.observe(viewLifecycleOwner, {
             if(!it) {
