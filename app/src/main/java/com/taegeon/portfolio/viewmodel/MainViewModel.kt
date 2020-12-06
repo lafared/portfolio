@@ -29,7 +29,7 @@ class MainViewModel : ViewModel() {
         if (keyword.trim() != "") {
             searchStatusListener.value?.onSearchStatusChange(false)
             val page = requestPage.value ?: 0
-            Log.d("MainViewModel", "requestPage : $page")
+            Log.d("MainViewModel", "requestPage : ${page + 1}")
             // very slow
             requestPage.postValue((requestPage.value ?: 0) + 1)
 
