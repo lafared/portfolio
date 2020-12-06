@@ -16,12 +16,18 @@ import com.taegeon.portfolio.R
 import com.taegeon.portfolio.adapter.DataBindingAdapters
 import com.taegeon.portfolio.adapter.ImgListAdapter
 import com.taegeon.portfolio.databinding.MainFragmentBinding
+import com.taegeon.portfolio.listener.FragmentListener
 import com.taegeon.portfolio.listener.ImgListScrollListener
 import com.taegeon.portfolio.viewmodel.MainViewModel
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), FragmentListener {
+
+    companion object {
+        fun newInstance() = MainFragment()
+    }
+
     private val compositeDisposable = CompositeDisposable()
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: MainFragmentBinding
@@ -69,5 +75,12 @@ class MainFragment : Fragment() {
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
         }
+    }
+
+    override fun onChangeImgFragment(imageUrl: String, displaySitename: String, datetime: String) {
+        activity?.supportFragmentManager?.beginTransaction()
+                ?.add(R.id.container, ImgViewFragment.newInstance())
+                ?.addToBackStack("")
+                ?.commit()
     }
 }
