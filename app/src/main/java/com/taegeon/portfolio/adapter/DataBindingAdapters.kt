@@ -10,7 +10,7 @@ import com.taegeon.portfolio.data.Documents
 object DataBindingAdapters {
     @JvmStatic
     @BindingAdapter("bind_img_n_list")
-    fun BindImgNList(recyclerView: RecyclerView, items: MutableLiveData<List<Documents>>) {
+    fun BindImgNList(recyclerView: RecyclerView, items: MutableLiveData<ArrayList<Documents>>) {
         if (items.value != null && items.value!!.isNotEmpty()) {
             val adapter = recyclerView.adapter as? ImgListAdapter ?: ImgListAdapter().apply { recyclerView.adapter = this }
             adapter.items = items.value!!
@@ -23,7 +23,7 @@ object DataBindingAdapters {
 
     @JvmStatic
     @BindingAdapter("bind_img_n_emptytxt")
-    fun BindImgNEmptyTxt(textView: TextView, items: MutableLiveData<List<Documents>>) {
+    fun BindImgNEmptyTxt(textView: TextView, items: MutableLiveData<ArrayList<Documents>>) {
         if (items.value != null && items.value!!.isNotEmpty()) {
             textView.visibility = View.GONE
         } else {

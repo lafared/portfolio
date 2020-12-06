@@ -5,40 +5,67 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.taegeon.portfolio.data.Documents
 import com.taegeon.portfolio.data.ImgData
+import com.taegeon.portfolio.listener.SearchStatusListener
 import com.taegeon.portfolio.net.DaumApiManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel : ViewModel() {
-    val documents: MutableLiveData<List<Documents>> by lazy {
-        MutableLiveData<List<Documents>>()
+    val documents: MutableLiveData<ArrayList<Documents>> by lazy {
+        MutableLiveData<ArrayList<Documents>>()
     }
     val isSuccessful: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
+    val searchStatusListener: MutableLiveData<SearchStatusListener> by lazy {
+        MutableLiveData<SearchStatusListener>()
+    }
+    private val requestPage: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
 
-    fun runImgSearch(keyword: String) {
+    fun runImgSearch(keyword: String, loadMore: Boolean) {
         if (keyword.trim() != "") {
-            DaumApiManager.getService().requestSearchImg(keyword = keyword).enqueue(object :
+            searchStatusListener.value?.onSearchStatusChange(false)
+            val page = requestPage.value ?: 0
+            Log.d("MainViewModel", "requestPage : $page")
+            // very slow
+            requestPage.postValue((requestPage.value ?: 0) + 1)
+
+            DaumApiManager.getService().requestSearchImg(keyword = keyword, page = page + 1).enqueue(object :
                 Callback<ImgData> {
                 override fun onFailure(call: Call<ImgData>, t: Throwable) {
                     isSuccessful.value = false
+                    searchStatusListener.value?.onSearchStatusChange(true)
                     Log.d("MainViewModel", "requestSearchImg, onFailure, $t")
                 }
 
                 override fun onResponse(call: Call<ImgData>, response: Response<ImgData>) {
                     if (response.isSuccessful) {
                         isSuccessful.value = true
+                        val arrayList: ArrayList<Documents> = ArrayList()
                         Log.d("MainViewModel", "response : ${response.body().toString()}")
-                        documents.value = response.body()?.documents ?: emptyList()
-                        // val url = documents.value?.get(0)?.image_url
+
+                        if (loadMore) {
+                            documents.value?.addAll(response.body()?.documents ?: emptyList())
+                        } else {
+                            arrayList.addAll(response.body()?.documents ?: emptyList())
+                            documents.value = arrayList
+                        }
+                        searchStatusListener.value?.onSearchStatusChange(true)
                     } else {
                         isSuccessful.value = false
+                        searchStatusListener.value?.onSearchStatusChange(true)
                         Log.d("MainViewModel", "requestSearchImg, onResponse, isSuccessful is false, $response.errorBody()")
                     }
                 }
             })
         }
+    }
+
+    fun initailize() {
+        requestPage.value = 0
+        documents.value = ArrayList()
     }
 }

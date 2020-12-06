@@ -2,7 +2,6 @@ package com.taegeon.portfolio.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
 import com.taegeon.portfolio.R
 import com.taegeon.portfolio.adapter.DataBindingAdapters
 import com.taegeon.portfolio.databinding.MainFragmentBinding
+import com.taegeon.portfolio.listener.ImgListScrollListener
 import com.taegeon.portfolio.viewmodel.MainViewModel
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
@@ -44,13 +45,19 @@ class MainFragment : Fragment() {
 
         compositeDisposable.add(
             binding.inputImgName.afterTextChangeEvents()
-                    .subscribe { mainViewModel.documents.value = emptyList() }
+                .subscribe { mainViewModel.initailize() }
         )
         compositeDisposable.add(
             binding.inputImgName.afterTextChangeEvents()
                 .debounce(1000, TimeUnit.MILLISECONDS)
-                .subscribe { mainViewModel.runImgSearch(it.view.text.toString()) }
+                .subscribe { mainViewModel.runImgSearch(it.view.text.toString(), false) }
         )
+
+        val imgListScrollListener = ImgListScrollListener(
+            { mainViewModel.runImgSearch(binding.inputImgName.text.toString(), true) },
+            binding.imgList.layoutManager as GridLayoutManager)
+        binding.imgList.addOnScrollListener(imgListScrollListener)
+        mainViewModel.searchStatusListener.value = imgListScrollListener
 
         return binding.root
     }

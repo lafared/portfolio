@@ -35,6 +35,7 @@ class ImgListAdapter () : RecyclerView.Adapter<ImgListAdapter.ViewHolder>(){
         fun bind(listener: View.OnClickListener, item: Documents){
             GlideApp.with(viewBinding.img.context)
                 .load(item.image_url)
+                .placeholder(R.drawable.ic_launcher_foreground)
                 .into(viewBinding.img)
             viewBinding.root.setOnClickListener(listener)
         }
