@@ -4,5 +4,6 @@
 
     <dimen name="default_margin">10dp</dimen>
     <dimen name="datetime_margin">50dp</dimen>
+    <dimen name="default_margin_5">5dp</dimen>
 
 </resources>

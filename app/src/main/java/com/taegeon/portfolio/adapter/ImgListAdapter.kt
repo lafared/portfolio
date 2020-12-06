@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.taegeon.portfolio.R
 import com.taegeon.portfolio.data.Documents
 import com.taegeon.portfolio.databinding.ImgListItemBinding
+import com.taegeon.portfolio.util.GlideApp
 
 class ImgListAdapter () : RecyclerView.Adapter<ImgListAdapter.ViewHolder>(){
     var items: List<Documents> = emptyList()
@@ -31,7 +32,9 @@ class ImgListAdapter () : RecyclerView.Adapter<ImgListAdapter.ViewHolder>(){
 
     class ViewHolder(private val viewBinding: ImgListItemBinding) : RecyclerView.ViewHolder(viewBinding.root){
         fun bind(listener: View.OnClickListener, item: Documents){
-            viewBinding.test.text = item.datetime
+            GlideApp.with(viewBinding.img.context)
+                .load(item.image_url)
+                .into(viewBinding.img)
             viewBinding.root.setOnClickListener(listener)
         }
     }

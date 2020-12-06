@@ -1,14 +1,15 @@
 package com.taegeon.portfolio.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
 import com.taegeon.portfolio.R
 import com.taegeon.portfolio.adapter.DataBindingAdapters
@@ -30,6 +31,9 @@ class MainFragment : Fragment() {
         mainViewModel.isSuccessful.observe(viewLifecycleOwner, {
             if(!it) {
                 Toast.makeText(context, R.string.search_fail, Toast.LENGTH_SHORT).show()
+            } else {
+                val im = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                im.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
             }
         })
         mainViewModel.documents.observe(viewLifecycleOwner, {
