@@ -1,73 +1,55 @@
 package com.taegeon.portfolio.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.jakewharton.rxbinding3.view.clicks
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
-import com.taegeon.portfolio.adapter.ImgListAdapter
-import com.taegeon.portfolio.data.ImgData
+import com.taegeon.portfolio.R
+import com.taegeon.portfolio.adapter.DataBindingAdapters
 import com.taegeon.portfolio.databinding.MainFragmentBinding
-import com.taegeon.portfolio.net.DaumApiManager
-import com.taegeon.portfolio.viewmodel.TmpItem
+import com.taegeon.portfolio.viewmodel.MainViewModel
 import io.reactivex.disposables.CompositeDisposable
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
     private val compositeDisposable = CompositeDisposable()
+    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var binding: MainFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        val mainFragmentBinding = MainFragmentBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.main_fragment, container, false)
+        binding.mainViewModel = mainViewModel
 
-        val list = ArrayList<TmpItem>()
-        for (idx in 1..100) {
-            list.add(TmpItem(idx.toString()))
-        }
+        mainViewModel.isSuccessful.observe(viewLifecycleOwner, {
+            if(!it) {
+                Toast.makeText(context, R.string.search_fail, Toast.LENGTH_SHORT).show()
+            }
+        })
+        mainViewModel.documents.observe(viewLifecycleOwner, {
+            DataBindingAdapters.BindImgNList(binding.imgList, mainViewModel.documents)
+            DataBindingAdapters.BindImgNEmptyTxt(binding.noSearchResult, mainViewModel.documents)
+        })
 
-        mainFragmentBinding.imgList.adapter = ImgListAdapter(list)
-
-        val observableEditText = mainFragmentBinding.inputImgName.afterTextChangeEvents()
         compositeDisposable.add(
-            observableEditText.debounce(1000, TimeUnit.MILLISECONDS)
-                .subscribe { runImgSearch(it.view.text.toString()) }
+            binding.inputImgName.afterTextChangeEvents()
+                .debounce(1000, TimeUnit.MILLISECONDS)
+                .subscribe { mainViewModel.runImgSearch(it.view.text.toString()) }
         )
 
-        return mainFragmentBinding.root
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.dispose()
-        }
-    }
-
-    private fun runImgSearch(keyword: String) {
-        if (keyword.trim() != "") {
-            DaumApiManager.getService().requestSearchImg(keyword = keyword).enqueue(object : Callback<ImgData> {
-                override fun onFailure(call: Call<ImgData>, t: Throwable) {
-                    Toast.makeText(context, "search fail, onFailure", Toast.LENGTH_SHORT).show()
-                    Log.d("MainFragment", "requestSearchImg, onFailure, $t")
-                }
-
-                override fun onResponse(call: Call<ImgData>, response: Response<ImgData>) {
-                    if (response.isSuccessful) {
-                        Log.d("MainFragment", "response : ${response.body().toString()}")
-                    } else {
-                        Toast.makeText(context, "search fail, onResponse, isSuccessful is false", Toast.LENGTH_SHORT).show()
-                        Log.d("MainFragment", "requestSearchImg, onResponse, isSuccessful is false, $response.errorBody()")
-                    }
-                }
-            })
         }
     }
 }

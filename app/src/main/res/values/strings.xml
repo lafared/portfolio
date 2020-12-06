@@ -5,4 +5,9 @@
 
     <string name="display_sitename">display sitename : </string>
     <string name="datetime">datetime : </string>
+
+    <string name="img_desc">img</string>
+
+    <string name="search_fail">search fail</string>
+    <string name="no_search_result">NO SEARCH RESULT</string>
 </resources>
