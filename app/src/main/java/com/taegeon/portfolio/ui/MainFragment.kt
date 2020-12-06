@@ -2,6 +2,7 @@ package com.taegeon.portfolio.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,10 @@ class MainFragment : Fragment() {
             DataBindingAdapters.BindImgNEmptyTxt(binding.noSearchResult, mainViewModel.documents)
         })
 
+        compositeDisposable.add(
+            binding.inputImgName.afterTextChangeEvents()
+                    .subscribe { mainViewModel.documents.value = emptyList() }
+        )
         compositeDisposable.add(
             binding.inputImgName.afterTextChangeEvents()
                 .debounce(1000, TimeUnit.MILLISECONDS)
