@@ -9,5 +9,5 @@
     <string name="img_desc">img</string>
 
     <string name="search_fail">search fail</string>
-    <string name="no_search_result">NO SEARCH RESULT</string>
+    <string name="no_search_result">검색 결과가 없습니다.</string>
 </resources>
