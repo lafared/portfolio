@@ -25,7 +25,7 @@ class MainViewModel : ViewModel() {
         MutableLiveData<Int>()
     }
 
-    fun runImgSearch(keyword: String, loadMore: Boolean) {
+    fun runImgSearch(daumApiManager: DaumApiManager, keyword: String, loadMore: Boolean) {
         if (keyword.trim() != "") {
             searchStatusListener.value?.onSearchStatusChange(false)
             val page = requestPage.value ?: 0
@@ -33,7 +33,7 @@ class MainViewModel : ViewModel() {
             // very slow
             requestPage.postValue((requestPage.value ?: 0) + 1)
 
-            DaumApiManager.getService().requestSearchImg(keyword = keyword, page = page + 1).enqueue(object :
+            daumApiManager.retrofitService.requestSearchImg(keyword = keyword, page = page + 1).enqueue(object :
                 Callback<ImgData> {
                 override fun onFailure(call: Call<ImgData>, t: Throwable) {
                     isSuccessful.value = false

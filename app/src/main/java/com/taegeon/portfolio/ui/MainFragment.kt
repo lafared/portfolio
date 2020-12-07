@@ -17,8 +17,10 @@ import com.taegeon.portfolio.adapter.ImgListAdapter
 import com.taegeon.portfolio.databinding.MainFragmentBinding
 import com.taegeon.portfolio.listener.FragmentListener
 import com.taegeon.portfolio.listener.ImgListScrollListener
+import com.taegeon.portfolio.net.DaumApiManager
 import com.taegeon.portfolio.viewmodel.MainViewModel
 import io.reactivex.disposables.CompositeDisposable
+import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment(), FragmentListener {
@@ -30,6 +32,7 @@ class MainFragment : Fragment(), FragmentListener {
     private val compositeDisposable = CompositeDisposable()
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: MainFragmentBinding
+    private val daumApiManager: DaumApiManager by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -54,11 +57,11 @@ class MainFragment : Fragment(), FragmentListener {
         compositeDisposable.add(
             binding.inputImgName.afterTextChangeEvents()
                 .debounce(1000, TimeUnit.MILLISECONDS)
-                .subscribe { mainViewModel.runImgSearch(it.view.text.toString(), false) }
+                .subscribe { mainViewModel.runImgSearch(daumApiManager, it.view.text.toString(), false) }
         )
 
         val imgListScrollListener = ImgListScrollListener(
-            { mainViewModel.runImgSearch(binding.inputImgName.text.toString(), true) },
+            { mainViewModel.runImgSearch(daumApiManager, binding.inputImgName.text.toString(), true) },
             binding.imgList.layoutManager as GridLayoutManager)
         binding.imgList.addOnScrollListener(imgListScrollListener)
         mainViewModel.searchStatusListener.value = imgListScrollListener
