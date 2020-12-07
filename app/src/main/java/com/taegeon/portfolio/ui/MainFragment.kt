@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jakewharton.rxbinding3.widget.afterTextChangeEvents
 import com.taegeon.portfolio.R
-import com.taegeon.portfolio.adapter.DataBindingAdapters
 import com.taegeon.portfolio.adapter.ImgListAdapter
 import com.taegeon.portfolio.databinding.MainFragmentBinding
 import com.taegeon.portfolio.listener.FragmentListener
@@ -35,6 +34,7 @@ class MainFragment : Fragment(), FragmentListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.main_fragment, container, false)
+        binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
         binding.imgList.adapter = ImgListAdapter(this)
 
@@ -45,10 +45,6 @@ class MainFragment : Fragment(), FragmentListener {
                 val im = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 im.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
             }
-        })
-        mainViewModel.documents.observe(viewLifecycleOwner, {
-            DataBindingAdapters.BindImgNList(binding.imgList, mainViewModel.documents)
-            DataBindingAdapters.BindImgNEmptyTxt(binding.noSearchResult, mainViewModel.documents)
         })
 
         compositeDisposable.add(
