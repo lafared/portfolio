@@ -1,6 +1,5 @@
 package com.taegeon.portfolio.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +35,7 @@ class ImgListAdapter (private val fragmentListener: FragmentListener) : Recycler
             GlideApp.with(viewBinding.img.context)
                 .load(item.image_url)
                 .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_background)
                 .into(viewBinding.img)
             viewBinding.root.setOnClickListener(listener)
         }

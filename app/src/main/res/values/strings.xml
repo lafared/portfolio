@@ -3,8 +3,8 @@
 
     <string name="input_img_name">input img name</string>
 
-    <string name="display_sitename">display sitename : </string>
-    <string name="datetime">datetime : </string>
+    <string name="display_sitename">display sitename : %1$s</string>
+    <string name="datetime">datetime : %1$s</string>
 
     <string name="img_desc">img</string>
 

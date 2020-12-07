@@ -78,9 +78,17 @@ class MainFragment : Fragment(), FragmentListener {
     }
 
     override fun onChangeImgFragment(imageUrl: String, displaySitename: String, datetime: String) {
+        val bundle = Bundle()
+        bundle.putString("imageUrl", imageUrl)
+        bundle.putString("displaySitename", displaySitename)
+        bundle.putString("datetime", datetime)
+
+        val imgViewFragment = ImgViewFragment.newInstance()
+        imgViewFragment.arguments = bundle
+
         activity?.supportFragmentManager?.beginTransaction()
-                ?.add(R.id.container, ImgViewFragment.newInstance())
-                ?.addToBackStack("")
+                ?.add(R.id.container, imgViewFragment)
+                ?.addToBackStack(null)
                 ?.commit()
     }
 }
