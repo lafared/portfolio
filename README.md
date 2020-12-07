@@ -1,5 +1,5 @@
 # portfolio
-Daum 이미지검색 API 활용한 이미지 검색 앱
+Daum API 활용한 이미지 검색 앱
 
 [Function]
 - EditText에 문자를 입력 후 1초가 지나면 검색 실행
